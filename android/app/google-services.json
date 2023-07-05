@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "288449642998",
+    "project_id": "attendance-byod",
+    "storage_bucket": "attendance-byod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288449642998:android:2051de1e2afc0b77e9c7d7",
+        "android_client_info": {
+          "package_name": "com.example.attendance_byod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288449642998-3s6lo9co2964rdqt2v5nm6f6d2vllr5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD95KKI8GMbjHM1b-lgWDPjiwTYjwhvW5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288449642998-3s6lo9co2964rdqt2v5nm6f6d2vllr5l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

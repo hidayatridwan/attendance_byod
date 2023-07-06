@@ -6,21 +6,20 @@ KaryawanModel karyawanModelFromJson(Map<String, dynamic> json) =>
 String karyawanModelToJson(KaryawanModel data) => jsonEncode(data.toJson());
 
 class KaryawanModel {
-  KaryawanModel({
-    required this.id,
-    required this.nik,
-    required this.nama,
-    required this.jenisKelamin,
-    required this.tempatLahir,
-    required this.tanggalLahir,
-    required this.noHp,
-    required this.alamat,
-    required this.email,
-    required this.divisi,
-    required this.jabatan,
-    required this.password,
-    required this.facePoint
-  });
+  KaryawanModel(
+      {required this.id,
+      required this.nik,
+      required this.nama,
+      required this.jenisKelamin,
+      required this.tempatLahir,
+      required this.tanggalLahir,
+      required this.noHp,
+      required this.alamat,
+      required this.email,
+      required this.divisi,
+      required this.jabatan,
+      required this.password,
+      required this.facePoint});
 
   String id;
   String nik;
@@ -53,7 +52,7 @@ class KaryawanModel {
       );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+        "id": id,
         "nik": nik,
         "nama": nama,
         "jenisKelamin": jenisKelamin,
@@ -67,4 +66,11 @@ class KaryawanModel {
         "password": password,
         "facePoint": facePoint,
       };
+
+  @override
+  String toString() {
+    return "id $id nik $nik nama $nama jenisKelamin $jenisKelamin"
+        " tempatLahir $tempatLahir tanggalLahir $tanggalLahir noHp $noHp"
+        "alamat $alamat email $email divisi $divisi jabatan $jabatan password $password facePoint $facePoint";
+  }
 }

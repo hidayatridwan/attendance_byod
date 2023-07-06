@@ -111,6 +111,7 @@ class _MapsState extends State<Maps> {
                 final result = state.data
                     .where((e) => e.nama == 'initial')
                     .toList();
+
                 initialLocation = LatLng(result[0].lat, result[0].lng);
 
                 final polygon = state.data

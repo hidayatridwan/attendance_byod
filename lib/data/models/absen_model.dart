@@ -27,4 +27,9 @@ class AbsenModel {
         "jamDatang": jamDatang,
         "jamPulang": jamPulang,
       };
+
+  @override
+  String toString() {
+    return "nik $nik jamDatang $jamDatang jamPulang $jamPulang";
+  }
 }

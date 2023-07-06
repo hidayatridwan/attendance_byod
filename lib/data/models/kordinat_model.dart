@@ -31,4 +31,9 @@ class KordinatModel {
         "lng": lng,
         "jumlahAbsen": jumlahAbsen,
       };
+
+  @override
+  String toString() {
+    return "nama $nama lat $lat lng $lng jumlahAbsen $jumlahAbsen";
+  }
 }

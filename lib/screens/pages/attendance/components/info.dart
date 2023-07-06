@@ -67,50 +67,37 @@ class Info extends StatelessWidget {
               const SizedBox(
                 height: kSpace,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: state is SetMapAreaState &&
-                              state.isInSelectedArea
-                          ? () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const CameraPage(),
-                                  ));
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: kPurple,
-                          textStyle: kRalewayRegular,
-                          padding: const EdgeInsets.symmetric(vertical: 20)),
-                      child: const Text('Check In'),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: kSpace,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                        onPressed: state is SetMapAreaState &&
-                                state.isInSelectedArea
-                            ? () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const CameraPage(),
-                                    ));
-                              }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: kPurple,
-                            textStyle: kRalewayRegular,
-                            padding: const EdgeInsets.symmetric(vertical: 20)),
-                        child: const Text('Check Out')),
-                  )
-                ],
+              ElevatedButton(
+                onPressed: state is SetMapAreaState && state.isInSelectedArea
+                    ? () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CameraPage(),
+                            ));
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kYellow,
+                  foregroundColor: kPurple,
+                  textStyle: kRalewayRegular.copyWith(
+                      fontSize: 20, fontWeight: FontWeight.w700),
+                  minimumSize: const Size.fromHeight(50),
+                ),
+                child: BlocBuilder<KordinatBloc, KordinatState>(
+                    builder: (BuildContext context, state2) {
+                  if (state2 is KordinatSuccess) {
+                    final result =
+                        state2.data.where((e) => e.nama == 'initial').toList();
+
+                    if (result[0].jumlahAbsen > 0) {
+                      return const Text('CHECK OUT');
+                    } else {
+                      return const Text('CHECK IN');
+                    }
+                  }
+                  return const Text('Loading...');
+                }),
               )
             ],
           );

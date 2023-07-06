@@ -52,7 +52,7 @@ class AccountPage extends StatelessWidget {
                         ),
                         CardWidget(
                           label: 'Email',
-                          value: state.data.email,
+                          value: state.data.email ?? '-',
                         ),
                         CardWidget(
                           label: 'Date of birth',

@@ -108,15 +108,13 @@ class _MapsState extends State<Maps> {
           BlocBuilder<KordinatBloc, KordinatState>(
             builder: (context, state) {
               if (state is KordinatSuccess) {
-                final result = state.data
-                    .where((e) => e.nama == 'initial')
-                    .toList();
+                final result =
+                    state.data.where((e) => e.nama == 'initial').toList();
 
                 initialLocation = LatLng(result[0].lat, result[0].lng);
 
-                final polygon = state.data
-                    .where((e) => e.nama != 'initial')
-                    .toList();
+                final polygon =
+                    state.data.where((e) => e.nama != 'initial').toList();
                 polygonPoints = [];
                 for (var e in polygon) {
                   polygonPoints.add(LatLng(e.lat, e.lng));

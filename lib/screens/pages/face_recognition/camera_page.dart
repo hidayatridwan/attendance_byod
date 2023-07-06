@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:developer' as logDev;
 
 import 'package:attendance_byod/screens/pages/face_recognition/success_page.dart';
 import 'package:attendance_byod/screens/pages/login/login_page.dart';
@@ -43,7 +42,8 @@ class _CameraPageState extends State<CameraPage> {
   List? e1 = [];
   List? e2 = [];
   bool _faceFound = false;
-  String resName = '';
+  String nama = '';
+  int countValidation = 0;
   final FaceDetector _faceDetector = GoogleVision.instance
       .faceDetector(const FaceDetectorOptions(enableContours: true));
   final TextEditingController _nik = TextEditingController();
@@ -66,14 +66,10 @@ class _CameraPageState extends State<CameraPage> {
     tempDir = await getApplicationDocumentsDirectory();
     String embPath = '${tempDir!.path}/emb.json';
     jsonFile = File(embPath);
-    final nama = PrefsData.instance.user!.nama;
+    nama = "[${PrefsData.instance.user!.nik}] ${PrefsData.instance.user!.nama}";
     final facePoint = PrefsData.instance.user!.facePoint;
     data[nama] = jsonDecode(facePoint);
     jsonFile!.writeAsStringSync(jsonEncode(data));
-    final contents = await jsonFile!.readAsStringSync();
-    print('===================================================');
-    logDev.log(contents.toString());
-    print('===================================================');
   }
 
   void _initializeCamera() async {
@@ -114,12 +110,13 @@ class _CameraPageState extends State<CameraPage> {
                   convertedImage, x.round(), y.round(), w.round(), h.round());
               croppedImage = img_lib.copyResizeCropSquare(croppedImage, 112);
               res = _recog(croppedImage);
-              resName = res;
               finalResult.add(res, face);
             }
             setState(() {
               _scanResults = finalResult;
-              resName = res;
+              if (nama.toLowerCase() == res.toLowerCase()) {
+                countValidation++;
+              }
             });
 
             _isDetecting = false;
@@ -271,9 +268,8 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    print(resName);
     if (PrefsData.instance.user != null) {
-      if (resName.toLowerCase() == PrefsData.instance.user!.nama.toLowerCase()) {
+      if (countValidation > 15) {
         _camera = null;
         _faceDetector.close();
         final nik = PrefsData.instance.user!.nik;

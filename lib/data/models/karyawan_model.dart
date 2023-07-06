@@ -15,7 +15,7 @@ class KaryawanModel {
       required this.tanggalLahir,
       required this.noHp,
       required this.alamat,
-      required this.email,
+      this.email,
       required this.divisi,
       required this.jabatan,
       required this.password,
@@ -29,7 +29,7 @@ class KaryawanModel {
   String tanggalLahir;
   String noHp;
   String alamat;
-  String email;
+  String? email;
   String divisi;
   String jabatan;
   String password;

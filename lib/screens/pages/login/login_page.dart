@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../bloc/karyawan/karyawan_bloc.dart';
 import '../../../bloc/kordinat/kordinat_bloc.dart';
+import '../../../utility/prefs_data.dart';
 import '../../widgets/widgets.dart';
 import '../../../shared/shared.dart';
 import '../../../utility/size_config.dart';
@@ -18,6 +19,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PrefsData.instance.clear();
     return const Scaffold(
       body: Body(),
     );

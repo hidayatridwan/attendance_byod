@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../bloc/absen/absen_bloc.dart';
+import '../../../utility/prefs_data.dart';
 
 part 'components/card_widget.dart';
 
@@ -15,6 +16,7 @@ class LogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     DateTime date = DateTime.now();
+    final nik = PrefsData.instance.user!.nik;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,24 +26,26 @@ class LogPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              showDatePicker(
-                context: context,
-                initialDate: date,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2100),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData.light().copyWith(
-                      colorScheme: const ColorScheme.light(
-                        primary: kPurple,
+            onPressed: () async {
+              final DateTime? picked = await showDatePicker(
+                  context: context,
+                  initialDate: date,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                  builder: (context, child) {
+                    return Theme(
+                      data: ThemeData.light().copyWith(
+                        colorScheme: const ColorScheme.light(
+                          primary: kPurple,
+                        ),
+                        dialogBackgroundColor: kLightGrey,
                       ),
-                      dialogBackgroundColor: kLightGrey,
-                    ),
-                    child: child!,
-                  );
-                },
-              );
+                      child: child!,
+                    );
+                  });
+              final DateFormat formatter = DateFormat('yyyy-MM-dd');
+              final String period = formatter.format(picked!);
+              context.read<AbsenBloc>().add(LogEvent(nik, period));
             },
             icon: const Icon(
               Icons.calendar_month,

@@ -7,7 +7,7 @@ class AbsenRepository {
     try {
       final response = await _absenProvider.absen(nik);
       return Right(absenModelFromJson(response.data['result']));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         return Left(e.response!.data['error']);
       } else {
@@ -16,12 +16,13 @@ class AbsenRepository {
     }
   }
 
-  Future<Either<String, List<AbsenModel>>> logs(String nik) async {
+  Future<Either<String, List<AbsenModel>>> logs(
+      String nik, String period) async {
     try {
-      final response = await _absenProvider.logs(nik);
+      final response = await _absenProvider.logs(nik, period);
       List data = response.data['result'];
       return Right(data.map((e) => absenModelFromJson(e)).toList());
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         return Left(e.response!.data['error']);
       } else {

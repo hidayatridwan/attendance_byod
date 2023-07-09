@@ -11,10 +11,14 @@ class AbsenProvider {
     }
   }
 
-  Future<Response> logs(String nik) async {
+  Future<Response> logs(String nik, String period) async {
     try {
       dio.options.headers['x-api-key'] = token;
-      final Response response = await dio.get('$absenUrl/$nik');
+      String url = '$absenUrl/$nik';
+      if (period != '') {
+        url += '?period=$period';
+      }
+      final Response response = await dio.get(url);
       return response;
     } catch (e) {
       rethrow;

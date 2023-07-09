@@ -8,7 +8,7 @@ class KordinatRepository {
       final response = await _kordinatProvider.getKordinat(nik);
       List data = response.data['result'];
       return Right(data.map((e) => kordinatModelFromJson(e)).toList());
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         return Left(e.response!.data['error']);
       } else {

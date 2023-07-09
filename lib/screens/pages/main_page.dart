@@ -6,7 +6,6 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/kordinat/kordinat_bloc.dart';
 import '../../screens/pages/attendance/attendance_page.dart';
 import '../../utility/size_config.dart';
 import '../../shared/shared.dart';
@@ -73,7 +72,7 @@ class _MainPageState extends State<MainPage> {
               _pageIndex = index;
             });
             if (index == 1) {
-              context.read<AbsenBloc>().add(LogEvent(nik));
+              context.read<AbsenBloc>().add(LogEvent(nik, ''));
             }
           },
         ));

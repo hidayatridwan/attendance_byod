@@ -20,7 +20,7 @@ class AbsenBloc extends Bloc<AbsenEvent, AbsenState> {
 
     on<LogEvent>((event, emit) async {
       emit(LogLoading());
-      final result = await _absenRepository.logs(event.nik);
+      final result = await _absenRepository.logs(event.nik, event.period);
       result.fold((l) => emit(LogError(l)), (r) => emit(LogSuccess(r)));
     });
   }

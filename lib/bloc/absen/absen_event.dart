@@ -15,6 +15,7 @@ class DoAbsenEvent extends AbsenEvent {
 
 class LogEvent extends AbsenEvent {
   final String nik;
+  final String period;
 
-  const LogEvent(this.nik);
+  const LogEvent(this.nik, this.period);
 }

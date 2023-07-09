@@ -10,7 +10,7 @@ class KaryawanRepository {
       final result = response.data['result'];
       PrefsData.instance.saveUser(jsonEncode(result));
       return Right(karyawanModelFromJson(result));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         return Left(e.response!.data['error']);
       } else {
@@ -23,7 +23,7 @@ class KaryawanRepository {
     try {
       await _karyawanProvider.register(nik, facePoint);
       return const Right('Register Succeeded');
-    } on DioError {
+    } on DioException {
       return const Left('Register Failed');
     }
   }

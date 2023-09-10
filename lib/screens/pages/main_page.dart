@@ -1,11 +1,12 @@
-import 'package:attendance_byod/bloc/absen/absen_bloc.dart';
-import 'package:attendance_byod/screens/pages/account/account_page.dart';
-import 'package:attendance_byod/screens/pages/log/log_page.dart';
-import 'package:attendance_byod/utility/prefs_data.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/absen/absen_bloc.dart';
+import '../../bloc/kordinat/kordinat_bloc.dart';
+import '../../screens/pages/account/account_page.dart';
+import '../../screens/pages/log/log_page.dart';
+import '../../utility/prefs_data.dart';
 import '../../screens/pages/attendance/attendance_page.dart';
 import '../../utility/size_config.dart';
 import '../../shared/shared.dart';
@@ -70,10 +71,13 @@ class _MainPageState extends State<MainPage> {
           onTap: (index) {
             setState(() {
               _pageIndex = index;
+              if (index == 1) {
+                context.read<AbsenBloc>().add(LogEvent(nik, ''));
+              }
+    if (index == 0) {
+      context.read<KordinatBloc>().add(GetKordinatEvent(nik));
+    }
             });
-            if (index == 1) {
-              context.read<AbsenBloc>().add(LogEvent(nik, ''));
-            }
           },
         ));
   }

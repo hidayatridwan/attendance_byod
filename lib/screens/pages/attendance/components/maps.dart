@@ -29,6 +29,8 @@ class _MapsState extends State<Maps> {
   void initState() {
     super.initState();
 
+    context.read<MapBloc>().add(const SetMapAreaEvent(false));
+
     if (_locationSubscription != null) {
       _locationSubscription!.resume();
     }

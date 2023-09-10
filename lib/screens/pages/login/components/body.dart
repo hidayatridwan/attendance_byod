@@ -11,9 +11,9 @@ class Body extends StatelessWidget {
     SizeConfig().init(context);
 
     final TextEditingController nikController =
-        TextEditingController(text: 'S00062009');
+        TextEditingController(text: '');
     final TextEditingController passwordController =
-        TextEditingController(text: '1991-12-16');
+        TextEditingController(text: '');
 
     return Background(
         child: Padding(

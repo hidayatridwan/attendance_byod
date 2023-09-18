@@ -19,5 +19,12 @@ class KaryawanBloc extends Bloc<KaryawanEvent, KaryawanState> {
         emit(LoginSuccess(r));
       });
     });
+
+    on<UserEvent>((event, emit) async {
+      final result = await _karyawanRepository.user(event.nik);
+      result.fold((l) => emit(LoginError(l)), (r) {
+        emit(LoginSuccess(r));
+      });
+    });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:attendance_byod/bloc/karyawan/karyawan_bloc.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    // context.read<KaryawanBloc>().add(UserEvent(nik));
 
     return Scaffold(
         body: _pageIndex == 0
@@ -74,9 +76,9 @@ class _MainPageState extends State<MainPage> {
               if (index == 1) {
                 context.read<AbsenBloc>().add(LogEvent(nik, ''));
               }
-    if (index == 0) {
-      context.read<KordinatBloc>().add(GetKordinatEvent(nik));
-    }
+              if (index == 0) {
+                context.read<KordinatBloc>().add(GetKordinatEvent(nik));
+              }
             });
           },
         ));

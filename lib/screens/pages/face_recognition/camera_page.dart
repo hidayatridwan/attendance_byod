@@ -42,8 +42,7 @@ class _CameraPageState extends State<CameraPage> {
   List? e1 = [];
   List? e2 = [];
   bool _faceFound = false;
-  String nama = '';
-  int countValidation = 0;
+  int countValid = 0;
   final FaceDetector _faceDetector = GoogleVision.instance
       .faceDetector(const FaceDetectorOptions(enableContours: true));
   final TextEditingController _nik = TextEditingController();
@@ -66,9 +65,8 @@ class _CameraPageState extends State<CameraPage> {
     tempDir = await getApplicationDocumentsDirectory();
     String embPath = '${tempDir!.path}/emb.json';
     jsonFile = File(embPath);
-    nama = "[${PrefsData.instance.user!.nik}] ${PrefsData.instance.user!.nama}";
     final facePoint = PrefsData.instance.user!.facePoint;
-    data[nama] = jsonDecode(facePoint);
+    data['RECOGNIZED'] = jsonDecode(facePoint);
     jsonFile!.writeAsStringSync(jsonEncode(data));
   }
 
@@ -114,8 +112,10 @@ class _CameraPageState extends State<CameraPage> {
             }
             setState(() {
               _scanResults = finalResult;
-              if (nama.toLowerCase() == res.toLowerCase()) {
-                countValidation++;
+              if (res.toLowerCase() == "recognized") {
+                countValid++;
+              } else {
+                countValid = 0;
               }
             });
 
@@ -269,7 +269,7 @@ class _CameraPageState extends State<CameraPage> {
     SizeConfig().init(context);
 
     if (PrefsData.instance.user != null) {
-      if (countValidation > 15) {
+      if (countValid > 15) {
         _camera = null;
         _faceDetector.close();
         final nik = PrefsData.instance.user!.nik;

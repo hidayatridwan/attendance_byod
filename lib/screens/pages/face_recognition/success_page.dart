@@ -17,7 +17,6 @@ class SuccessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    final nik = PrefsData.instance.user!.nik;
     final kordinatBloc = context.read<KordinatBloc>();
 
     return Scaffold(
@@ -41,18 +40,16 @@ class SuccessPage extends StatelessWidget {
           RoundedButton(
             text: 'Okay',
             press: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      if(isRegistered) {
-                        return const LoginPage();
-                      }else{
-                        kordinatBloc.add(GetKordinatEvent(nik));
-                        return const MainPage();
-                      }
-                    }
-                  ));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                if (isRegistered) {
+                  return const LoginPage();
+                } else {
+                  final nik = PrefsData.instance.user!.nik;
+                  kordinatBloc.add(GetKordinatEvent(nik));
+                  return const MainPage();
+                }
+              }));
             },
           ),
           const Spacer(),

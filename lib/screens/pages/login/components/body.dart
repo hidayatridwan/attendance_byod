@@ -10,8 +10,7 @@ class Body extends StatelessWidget {
 
     SizeConfig().init(context);
 
-    final TextEditingController nikController =
-        TextEditingController(text: '');
+    final TextEditingController nikController = TextEditingController(text: '');
     final TextEditingController passwordController =
         TextEditingController(text: '');
 

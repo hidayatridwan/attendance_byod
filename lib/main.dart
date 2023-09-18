@@ -1,3 +1,4 @@
+import 'package:attendance_byod/screens/pages/main_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,6 +36,8 @@ class MainApp extends StatelessWidget {
 
   final isFirstInstall = PrefsData.instance.isFirstInstall;
 
+  final isLogin = PrefsData.instance.user;
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -44,10 +47,12 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<KaryawanBloc>(
-          create: (context) => KaryawanBloc(_karyawanRepository),
+          create: (context) => KaryawanBloc(_karyawanRepository)
+            ..add(UserEvent(isLogin != null ? isLogin!.nik : '000')),
         ),
         BlocProvider<KordinatBloc>(
-          create: (context) => KordinatBloc(_kordinatRepository),
+          create: (context) => KordinatBloc(_kordinatRepository)
+            ..add(GetKordinatEvent(isLogin != null ? isLogin!.nik : '000')),
         ),
         BlocProvider<MapBloc>(
           create: (context) => MapBloc(),
@@ -57,15 +62,18 @@ class MainApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            fontFamily: 'Raleway',
-            appBarTheme: const AppBarTheme(
-                color: kWhite,
-                centerTitle: true,
-                titleTextStyle: TextStyle(color: Colors.black87))),
-        home: isFirstInstall ? const WelcomePage() : const LoginPage(),
-      ),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              fontFamily: 'Raleway',
+              appBarTheme: const AppBarTheme(
+                  color: kWhite,
+                  centerTitle: true,
+                  titleTextStyle: TextStyle(color: Colors.black87))),
+          home: isFirstInstall
+              ? const WelcomePage()
+              : isLogin == null
+                  ? const LoginPage()
+                  : const MainPage()),
     );
   }
 }

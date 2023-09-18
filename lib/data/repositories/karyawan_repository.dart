@@ -27,4 +27,20 @@ class KaryawanRepository {
       return const Left('Register Failed');
     }
   }
+
+  Future<Either<String, KaryawanModel>> user(
+      String nik) async {
+    try {
+      final response = await _karyawanProvider.user(nik);
+      final result = response.data['result'];
+      PrefsData.instance.saveUser(jsonEncode(result));
+      return Right(karyawanModelFromJson(result));
+    } on DioException catch (e) {
+      if (e.response != null) {
+        return Left(e.response!.data['error']);
+      } else {
+        return Left(e.message!);
+      }
+    }
+  }
 }

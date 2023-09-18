@@ -29,9 +29,9 @@ class PrefsData {
 
   KaryawanModel? get user {
     final String? json = _pref.getString('user');
-    if(json==null){
+    if (json == null) {
       return null;
-    }else{
+    } else {
       return karyawanModelFromJson(jsonDecode(json!));
     }
   }

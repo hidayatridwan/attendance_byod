@@ -39,4 +39,15 @@ class KaryawanProvider {
       rethrow;
     }
   }
+
+  Future<Response> user(String nik) async {
+    try {
+      dio.options.headers['x-api-key'] = token;
+      final Response response =
+      await dio.get('$userUrl/$nik');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

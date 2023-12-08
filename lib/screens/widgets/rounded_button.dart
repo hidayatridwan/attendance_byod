@@ -15,8 +15,6 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return SizedBox(
       width: double.infinity,
       child: ClipRRect(
@@ -24,13 +22,13 @@ class RoundedButton extends StatelessWidget {
         child: TextButton(
             onPressed: disabled ? null : press,
             style: TextButton.styleFrom(
-                padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                padding: EdgeInsets.all(20.r),
                 backgroundColor: disabled ? kLightGrey : kPurple),
             child: loading
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
+                ? SizedBox(
+                    height: 20.sp,
+                    width: 20.sp,
+                    child: const CircularProgressIndicator(
                       color: kWhite,
                     ),
                   )

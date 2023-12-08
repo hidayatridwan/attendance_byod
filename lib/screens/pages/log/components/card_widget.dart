@@ -1,7 +1,13 @@
 part of '../log_page.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key, required this.dateStart, required this.dateEnd, required this.checkIn, required this.checkOut});
+  const CardWidget(
+      {super.key,
+      required this.dateStart,
+      required this.dateEnd,
+      required this.checkIn,
+      required this.checkOut});
+
   final DateTime dateStart;
   final DateTime dateEnd;
   final bool checkIn;
@@ -13,8 +19,7 @@ class CardWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
           color: kWhite,
-          border: Border(
-              bottom: BorderSide(color: kLightGrey, width: 1))),
+          border: Border(bottom: BorderSide(color: kLightGrey, width: 1))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -32,20 +37,20 @@ class CardWidget extends StatelessWidget {
           Row(
             children: [
               Chip(
-                  label: Text(DateFormat.Hms().format(dateStart),
-                      style: kOpenSansRegular.copyWith(
-                          fontSize:
-                          getProportionateScreenWidth(12))),
-                  backgroundColor: checkIn ? kGreen : kRed),
+                label: Text(DateFormat.Hms().format(dateStart),
+                    style: kOpenSansRegular.copyWith(fontSize: 12.sp)),
+                backgroundColor: checkIn ? kGreen : kRed,
+                shape: const StadiumBorder(side: BorderSide(color: kWhite)),
+              ),
               const SizedBox(
                 width: 10,
               ),
               Chip(
-                  label: Text(DateFormat.Hms().format(dateEnd),
-                      style: kOpenSansRegular.copyWith(
-                          fontSize:
-                          getProportionateScreenWidth(12))),
-                  backgroundColor: checkOut ? kGreen : kRed)
+                label: Text(DateFormat.Hms().format(dateEnd),
+                    style: kOpenSansRegular.copyWith(fontSize: 12.sp)),
+                backgroundColor: checkOut ? kGreen : kRed,
+                shape: const StadiumBorder(side: BorderSide(color: kWhite)),
+              )
             ],
           )
         ],

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
@@ -12,7 +13,6 @@ import '../../../bloc/karyawan/karyawan_bloc.dart';
 import '../../../bloc/kordinat/kordinat_bloc.dart';
 import '../../../bloc/map/map_bloc.dart';
 import '../../../shared/shared.dart';
-import '../../../utility/size_config.dart';
 import '../face_recognition/camera_page.dart';
 
 part './components/header.dart';
@@ -26,11 +26,11 @@ class AttendancePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    double heightScreen = MediaQuery.of(context).size.height;
 
     return SizedBox(
       width: double.infinity,
-      height: SizeConfig.screenHeight,
+      height: heightScreen,
       child: const Column(
         children: [
           Header(),

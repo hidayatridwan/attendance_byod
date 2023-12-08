@@ -23,8 +23,7 @@ class Info extends StatelessWidget {
                   return Text(
                     DateFormat.Hms().format(DateTime.now()),
                     style: kOpenSansRegular.copyWith(
-                        fontSize: getProportionateScreenWidth(40),
-                        fontWeight: FontWeight.w700),
+                        fontSize: 40.sp, fontWeight: FontWeight.w700),
                   );
                 },
               ),
@@ -49,7 +48,7 @@ class Info extends StatelessWidget {
                     color: state is SetMapAreaState
                         ? (state.isInSelectedArea ? kGreen : kRed)
                         : kRed,
-                    size: getProportionateScreenWidth(25),
+                    size: 25.sp,
                   ),
                   const SizedBox(
                     width: kSpace / 2,

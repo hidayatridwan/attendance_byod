@@ -6,12 +6,8 @@ class TextFieldContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(4),
-          horizontal: getProportionateScreenWidth(12)),
+      padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.w),
       width: double.infinity,
       decoration: BoxDecoration(
           color: kLightGrey,

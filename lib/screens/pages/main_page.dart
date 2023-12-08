@@ -1,7 +1,7 @@
-import 'package:attendance_byod/bloc/karyawan/karyawan_bloc.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../bloc/absen/absen_bloc.dart';
 import '../../bloc/kordinat/kordinat_bloc.dart';
@@ -9,7 +9,6 @@ import '../../screens/pages/account/account_page.dart';
 import '../../screens/pages/log/log_page.dart';
 import '../../utility/prefs_data.dart';
 import '../../screens/pages/attendance/attendance_page.dart';
-import '../../utility/size_config.dart';
 import '../../shared/shared.dart';
 
 class MainPage extends StatefulWidget {
@@ -25,9 +24,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    // context.read<KaryawanBloc>().add(UserEvent(nik));
-
     return Scaffold(
         body: _pageIndex == 0
             ? const AttendancePage()
@@ -36,7 +32,7 @@ class _MainPageState extends State<MainPage> {
                 : const AccountPage(),
         bottomNavigationBar: CustomNavigationBar(
           elevation: 0,
-          iconSize: getProportionateScreenHeight(30),
+          iconSize: 30.sp,
           selectedColor: kPurple,
           strokeColor: kPurple,
           unSelectedColor: kGrey,

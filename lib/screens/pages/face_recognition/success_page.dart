@@ -6,7 +6,6 @@ import 'package:lottie/lottie.dart';
 import '../../../bloc/kordinat/kordinat_bloc.dart';
 import '../../../screens/pages/main_page.dart';
 import '../../../utility/prefs_data.dart';
-import '../../../utility/size_config.dart';
 import '../../../shared/shared.dart';
 import '../../widgets/widgets.dart';
 
@@ -16,7 +15,6 @@ class SuccessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     final kordinatBloc = context.read<KordinatBloc>();
 
     return Scaffold(
@@ -27,7 +25,7 @@ class SuccessPage extends StatelessWidget {
             flex: 2,
           ),
           SizedBox(
-            width: getProportionateScreenWidth(kWidthImage),
+            width: kWidthImage,
             child: Lottie.asset(success),
           ),
           const Spacer(),

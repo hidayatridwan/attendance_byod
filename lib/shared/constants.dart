@@ -1,11 +1,12 @@
 part of 'shared.dart';
 
 const String token = 'QoaUmKyg60wWQl1LVkKi';
-const String baseUrl = 'https://test.gwenza.com/public/'; // http://192.168.1.13/absen-api/public/index.php/
+const String baseUrl = 'https://thorough-mayfly-leading.ngrok-free.app/';
 
 const String loginUrl = '${baseUrl}karyawan/login';
 const String userUrl = '${baseUrl}karyawan';
-const String apiKaryawanUrl = 'http://119.235.19.142:8034/ssthris/Main/api_karyawan/';
+const String apiKaryawanUrl =
+    'http://119.235.19.142:8034/ssthris/Main/api_karyawan/';
 const String absenUrl = '${baseUrl}absen';
 const String kordinatUrl = '${baseUrl}kordinat';
 

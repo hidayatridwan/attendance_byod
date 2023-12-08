@@ -8,8 +8,6 @@ class IsRegistered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -20,8 +18,8 @@ class IsRegistered extends StatelessWidget {
         TextButton(
           onPressed: press,
           child: Text(login ? 'Register' : 'Login',
-              style: kRalewaySemiBold.copyWith(
-                  color: kPurple, fontSize: getProportionateScreenWidth(14))),
+              style:
+                  kRalewaySemiBold.copyWith(color: kPurple, fontSize: 14.sp)),
         )
       ],
     );

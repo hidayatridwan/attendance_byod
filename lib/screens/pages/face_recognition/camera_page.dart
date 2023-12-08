@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:attendance_byod/screens/pages/face_recognition/success_page.dart';
 import 'package:attendance_byod/screens/pages/login/login_page.dart';
 import 'package:attendance_byod/utility/prefs_data.dart';
-import 'package:attendance_byod/utility/size_config.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +46,7 @@ class _CameraPageState extends State<CameraPage> {
       .faceDetector(const FaceDetectorOptions(enableContours: true));
   final TextEditingController _nik = TextEditingController();
   final KaryawanRepository _karyawanRepository = KaryawanRepository();
+  final nama = PrefsData.instance.user!.nama;
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _CameraPageState extends State<CameraPage> {
     String embPath = '${tempDir!.path}/emb.json';
     jsonFile = File(embPath);
     final facePoint = PrefsData.instance.user!.facePoint;
-    data['RECOGNIZED'] = jsonDecode(facePoint);
+    data[nama] = jsonDecode(facePoint);
     jsonFile!.writeAsStringSync(jsonEncode(data));
   }
 
@@ -112,7 +112,7 @@ class _CameraPageState extends State<CameraPage> {
             }
             setState(() {
               _scanResults = finalResult;
-              if (res.toLowerCase() == "recognized") {
+              if (res.toLowerCase() == nama.toLowerCase()) {
                 countValid++;
               } else {
                 countValid = 0;
@@ -266,8 +266,6 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     if (PrefsData.instance.user != null) {
       if (countValid > 15) {
         _camera = null;

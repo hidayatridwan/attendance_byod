@@ -20,22 +20,12 @@ const double kSpace = 10.0;
 const double kWidthImage = 250.0;
 
 final kRalewayBold = TextStyle(
-    fontFamily: 'Raleway',
-    fontWeight: FontWeight.w700,
-    fontSize: getProportionateScreenWidth(20));
+    fontFamily: 'Raleway', fontWeight: FontWeight.w700, fontSize: 20.sp);
 final kRalewaySemiBold = TextStyle(
-    fontFamily: 'Raleway',
-    fontWeight: FontWeight.w600,
-    fontSize: getProportionateScreenWidth(18));
+    fontFamily: 'Raleway', fontWeight: FontWeight.w600, fontSize: 18.sp);
 final kRalewayMedium = TextStyle(
-    fontFamily: 'Raleway',
-    fontWeight: FontWeight.w500,
-    fontSize: getProportionateScreenWidth(16));
+    fontFamily: 'Raleway', fontWeight: FontWeight.w500, fontSize: 16.sp);
 final kRalewayRegular = TextStyle(
-    fontFamily: 'Raleway',
-    fontWeight: FontWeight.w400,
-    fontSize: getProportionateScreenWidth(14));
+    fontFamily: 'Raleway', fontWeight: FontWeight.w400, fontSize: 14.sp);
 final kOpenSansRegular = TextStyle(
-    fontFamily: 'OpenSans',
-    fontWeight: FontWeight.w400,
-    fontSize: getProportionateScreenWidth(14));
+    fontFamily: 'OpenSans', fontWeight: FontWeight.w400, fontSize: 14.sp);

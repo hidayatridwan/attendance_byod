@@ -5,15 +5,13 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return Background(
         child: Padding(
       padding: const EdgeInsets.all(kPadding),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Spacer(),
         SizedBox(
-          width: getProportionateScreenWidth(kWidthImage),
+          width: kWidthImage,
           child: Lottie.asset(welcome),
         ),
         const Spacer(),

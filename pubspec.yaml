@@ -55,6 +55,7 @@ dependencies:
   tflite_flutter: ^0.7.0
   camera: ^0.10.3
   quiver: ^3.2.1
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
@@ -101,6 +102,7 @@ flutter:
     - family: Raleway
       fonts:
         - asset: assets/fonts/Raleway/Raleway-Regular.ttf
+          weight: 400
         - asset: assets/fonts/Raleway/Raleway-Medium.ttf
           weight: 500
         - asset: assets/fonts/Raleway/Raleway-SemiBold.ttf
@@ -110,6 +112,7 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/Open_Sans/OpenSans-Regular.ttf
+          weight: 400
         - asset: assets/fonts/Open_Sans/OpenSans-Medium.ttf
           weight: 500
         - asset: assets/fonts/Open_Sans/OpenSans-SemiBold.ttf

@@ -1,7 +1,7 @@
 import 'package:attendance_byod/shared/shared.dart';
-import 'package:attendance_byod/utility/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../bloc/absen/absen_bloc.dart';
@@ -14,7 +14,6 @@ class LogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     DateTime date = DateTime.now();
     final nik = PrefsData.instance.user!.nik;
 

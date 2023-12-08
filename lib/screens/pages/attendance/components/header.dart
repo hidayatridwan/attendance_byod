@@ -10,12 +10,9 @@ class Header extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: getProportionateScreenHeight(150),
+      height: 65.h,
       padding: const EdgeInsets.only(
-          left: kPadding / 2,
-          top: kPadding,
-          right: kPadding / 2,
-          bottom: 6),
+          left: kPadding / 2, top: kPadding, right: kPadding / 2, bottom: 0),
       decoration: const BoxDecoration(
           color: kDarkPurple,
           borderRadius: BorderRadius.only(

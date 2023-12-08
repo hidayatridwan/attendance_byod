@@ -8,8 +8,6 @@ class Body extends StatelessWidget {
     final karyawanBloc = context.read<KaryawanBloc>();
     final kordinatBloc = context.read<KordinatBloc>();
 
-    SizeConfig().init(context);
-
     final TextEditingController nikController = TextEditingController(text: '');
     final TextEditingController passwordController =
         TextEditingController(text: '');
@@ -22,7 +20,7 @@ class Body extends StatelessWidget {
         children: [
           const Spacer(),
           SizedBox(
-            width: getProportionateScreenWidth(kWidthImage),
+            width: kWidthImage,
             child: Lottie.asset(login),
           ),
           const Spacer(),

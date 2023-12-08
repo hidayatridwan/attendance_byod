@@ -10,9 +10,9 @@ class KordinatRepository {
       return Right(data.map((e) => kordinatModelFromJson(e)).toList());
     } on DioException catch (e) {
       if (e.response != null) {
-        return Left(e.response!.data['error']);
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
       } else {
-        return Left(e.message!);
+        return const Left('Failed host lookup connection');
       }
     }
   }

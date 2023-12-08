@@ -6,18 +6,16 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return SingleChildScrollView(
       child: SizedBox(
         width: double.infinity,
-        height: SizeConfig.screenHeight,
+        height: 1.sh,
         child: Stack(
           children: [
             Positioned(
                 right: 0,
                 bottom: 0,
-                width: SizeConfig.screenWidth * 0.3,
+                width: 0.3.sw,
                 child: Image.asset(loginBottom)),
             child
           ],

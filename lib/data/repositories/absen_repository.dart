@@ -9,9 +9,9 @@ class AbsenRepository {
       return Right(absenModelFromJson(response.data['result']));
     } on DioException catch (e) {
       if (e.response != null) {
-        return Left(e.response!.data['error']);
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
       } else {
-        return Left(e.message!);
+        return const Left('Failed host lookup connection');
       }
     }
   }
@@ -24,9 +24,9 @@ class AbsenRepository {
       return Right(data.map((e) => absenModelFromJson(e)).toList());
     } on DioException catch (e) {
       if (e.response != null) {
-        return Left(e.response!.data['error']);
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
       } else {
-        return Left(e.message!);
+        return const Left('Failed host lookup connection');
       }
     }
   }

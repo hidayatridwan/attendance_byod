@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'bloc/absen/absen_bloc.dart';
 import 'bloc/map/map_bloc.dart';
@@ -44,36 +45,57 @@ class MainApp extends StatelessWidget {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<KaryawanBloc>(
-          create: (context) => KaryawanBloc(_karyawanRepository)
-            ..add(UserEvent(isLogin != null ? isLogin!.nik : '000')),
-        ),
-        BlocProvider<KordinatBloc>(
-          create: (context) => KordinatBloc(_kordinatRepository)
-            ..add(GetKordinatEvent(isLogin != null ? isLogin!.nik : '000')),
-        ),
-        BlocProvider<MapBloc>(
-          create: (context) => MapBloc(),
-        ),
-        BlocProvider<AbsenBloc>(
-          create: (context) => AbsenBloc(_absenRepository),
-        ),
-      ],
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              fontFamily: 'Raleway',
-              appBarTheme: const AppBarTheme(
-                  color: kWhite,
-                  centerTitle: true,
-                  titleTextStyle: TextStyle(color: Colors.black87))),
-          home: isFirstInstall
-              ? const WelcomePage()
-              : isLogin == null
-                  ? const LoginPage()
-                  : const MainPage()),
+    return ScreenUtilInit(
+      designSize: const Size(360, 390),
+      minTextAdapt: true,
+      splitScreenMode: false,
+      builder: (context, child) {
+        return MultiBlocProvider(
+          providers: [
+            // BlocProvider<KaryawanBloc>(
+            //     create: (context) => KaryawanBloc(_karyawanRepository)
+            //       ..add(UserEvent(isLogin != null ? isLogin!.nik : '000')),
+            //   ),
+            // BlocProvider<KordinatBloc>(
+            //   create: (context) => KordinatBloc(_kordinatRepository)
+            //     ..add(GetKordinatEvent(isLogin != null ? isLogin!.nik : '000')),
+            // ),
+            BlocProvider<KaryawanBloc>(create: (context) {
+              if (isLogin != null) {
+                KaryawanBloc(_karyawanRepository).add(UserEvent(isLogin!.nik));
+              }
+              return KaryawanBloc(_karyawanRepository);
+            }),
+            BlocProvider<KordinatBloc>(create: (context) {
+              if (isLogin != null) {
+                KordinatBloc(_kordinatRepository)
+                    .add(GetKordinatEvent(isLogin!.nik));
+              }
+              return KordinatBloc(_kordinatRepository);
+            }),
+            BlocProvider<MapBloc>(
+              create: (context) => MapBloc(),
+            ),
+            BlocProvider<AbsenBloc>(
+              create: (context) => AbsenBloc(_absenRepository),
+            ),
+          ],
+          child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                  fontFamily: 'Raleway',
+                  appBarTheme: const AppBarTheme(
+                      color: kWhite,
+                      centerTitle: true,
+                      titleTextStyle: TextStyle(color: Colors.black87)),
+                  scaffoldBackgroundColor: kLightGrey),
+              home: isFirstInstall
+                  ? const WelcomePage()
+                  : isLogin == null
+                      ? const LoginPage()
+                      : const MainPage()),
+        );
+      },
     );
   }
 }

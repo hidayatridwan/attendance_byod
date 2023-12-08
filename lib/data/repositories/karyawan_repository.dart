@@ -12,9 +12,9 @@ class KaryawanRepository {
       return Right(karyawanModelFromJson(result));
     } on DioException catch (e) {
       if (e.response != null) {
-        return Left(e.response!.data['error']);
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
       } else {
-        return Left(e.message!);
+        return const Left('Failed host lookup connection');
       }
     }
   }
@@ -28,8 +28,7 @@ class KaryawanRepository {
     }
   }
 
-  Future<Either<String, KaryawanModel>> user(
-      String nik) async {
+  Future<Either<String, KaryawanModel>> user(String nik) async {
     try {
       final response = await _karyawanProvider.user(nik);
       final result = response.data['result'];
@@ -37,9 +36,9 @@ class KaryawanRepository {
       return Right(karyawanModelFromJson(result));
     } on DioException catch (e) {
       if (e.response != null) {
-        return Left(e.response!.data['error']);
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
       } else {
-        return Left(e.message!);
+        return const Left('Failed host lookup connection');
       }
     }
   }

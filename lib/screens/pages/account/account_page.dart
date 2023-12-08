@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../bloc/karyawan/karyawan_bloc.dart';
 import '../../../shared/shared.dart';
 import '../../../utility/prefs_data.dart';
-import '../../../utility/size_config.dart';
 import '../login/login_page.dart';
 
 part 'components/card_widget.dart';
@@ -14,7 +14,6 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -22,7 +21,7 @@ class AccountPage extends StatelessWidget {
             style: kRalewaySemiBold,
           ),
         ),
-        body: Column(
+        body: ListView(
           children: [
             Container(
               margin: const EdgeInsets.all(kPadding),
@@ -93,7 +92,10 @@ class AccountPage extends StatelessWidget {
                   style: kRalewayRegular.copyWith(color: Colors.black87),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 20.sp,
+            ),
           ],
         ));
   }

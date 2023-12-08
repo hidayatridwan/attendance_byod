@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../shared/shared.dart';
-import '../../utility/size_config.dart';
 
 part 'rounded_button.dart';
 

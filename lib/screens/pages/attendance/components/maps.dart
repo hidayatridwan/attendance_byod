@@ -102,7 +102,7 @@ class _MapsState extends State<Maps> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: getProportionateScreenHeight(260),
+      height: 150.h,
       width: double.infinity,
       color: kLightGrey,
       child: Stack(

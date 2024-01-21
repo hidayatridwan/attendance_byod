@@ -13,14 +13,14 @@ class CardWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: kRalewayMedium,
+          style: kRalewayMedium.copyWith(fontSize: 16.sp),
         ),
         const SizedBox(
           height: kSpace,
         ),
         Text(
           value,
-          style: kRalewayMedium.copyWith(color: kGrey),
+          style: kRalewayMedium.copyWith(color: kGrey, fontSize: 16.sp),
         ),
         const SizedBox(
           height: kSpace,

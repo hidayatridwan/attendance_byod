@@ -32,7 +32,7 @@ class Info extends StatelessWidget {
                 builder: (context) {
                   return Text(
                     DateFormat('EEEE, d MMMM y').format(DateTime.now()),
-                    style: kRalewayMedium,
+                    style: kRalewayMedium.copyWith(fontSize: 16.sp),
                   );
                 },
               ),
@@ -60,7 +60,8 @@ class Info extends StatelessWidget {
                       style: kRalewaySemiBold.copyWith(
                           color: state is SetMapAreaState
                               ? (state.isInSelectedArea ? kGreen : kRed)
-                              : kRed)),
+                              : kRed,
+                          fontSize: 18.sp)),
                 ],
               ),
               const SizedBox(

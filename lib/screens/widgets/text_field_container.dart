@@ -1,8 +1,10 @@
 part of 'widgets.dart';
 
 class TextFieldContainer extends StatelessWidget {
-  const TextFieldContainer({Key? key, required this.child}) : super(key: key);
+  const TextFieldContainer({Key? key, required this.child, required this.color})
+      : super(key: key);
   final Widget child;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +12,7 @@ class TextFieldContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.w),
       width: double.infinity,
       decoration: BoxDecoration(
-          color: kLightGrey,
-          borderRadius: BorderRadius.circular(kBorderRadius)),
+          color: color, borderRadius: BorderRadius.circular(kBorderRadius)),
       child: child,
     );
   }

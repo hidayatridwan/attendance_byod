@@ -5,7 +5,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final karyawanBloc = context.read<KaryawanBloc>();
+    final loginBloc = context.read<LoginBloc>();
     final kordinatBloc = context.read<KordinatBloc>();
 
     final TextEditingController nikController = TextEditingController(text: '');
@@ -40,11 +40,11 @@ class Body extends StatelessWidget {
           const SizedBox(
             height: kSpace,
           ),
-          BlocConsumer<KaryawanBloc, KaryawanState>(
+          BlocConsumer<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccess) {
                 kordinatBloc.add(GetKordinatEvent(nikController.text));
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const MainPage(),
@@ -54,7 +54,8 @@ class Body extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
                     state.error,
-                    style: kRalewayRegular.copyWith(color: kWhite),
+                    style: kRalewayRegular.copyWith(
+                        color: kWhite, fontSize: 14.sp),
                   ),
                   backgroundColor: kRed,
                 ));
@@ -64,8 +65,8 @@ class Body extends StatelessWidget {
               return RoundedButton(
                 text: 'Login',
                 press: () {
-                  karyawanBloc.add(
-                      LoginEvent(nikController.text, passwordController.text));
+                  loginBloc.add(
+                      UserEvent(nikController.text, passwordController.text));
                 },
                 loading: state is LoginLoading ? true : false,
               );

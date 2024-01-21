@@ -18,14 +18,14 @@ class Body extends StatelessWidget {
         Text(
           'Attendance with BYOD',
           textAlign: TextAlign.center,
-          style: kRalewayBold,
+          style: kRalewayBold.copyWith(fontSize: 20.sp),
         ),
         const SizedBox(
           height: kSpace,
         ),
         Text(
             'Jadikan HP anda sebagai absensi untuk masuk dan pulang kerja, supaya menatap masa depan yang lebih cerah',
-            style: kRalewayRegular.copyWith(color: kDarkGrey),
+            style: kRalewayRegular.copyWith(color: kDarkGrey, fontSize: 14.sp),
             textAlign: TextAlign.center),
         const Spacer(
           flex: 3,
@@ -34,7 +34,7 @@ class Body extends StatelessWidget {
           text: 'Get Started',
           press: () {
             PrefsData.instance.setFirstInstall();
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),

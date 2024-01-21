@@ -9,10 +9,10 @@ import 'package:location/location.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as map_tool;
 import 'package:timer_builder/timer_builder.dart';
 
-import '../../../bloc/karyawan/karyawan_bloc.dart';
 import '../../../bloc/kordinat/kordinat_bloc.dart';
 import '../../../bloc/map/map_bloc.dart';
 import '../../../shared/shared.dart';
+import '../../../utility/prefs_data.dart';
 import '../face_recognition/camera_page.dart';
 
 part './components/header.dart';
@@ -27,19 +27,22 @@ class AttendancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double heightScreen = MediaQuery.of(context).size.height;
+    final nik = PrefsData.instance.user!.nik;
+    final nama = PrefsData.instance.user!.nama;
+    final jabatan = PrefsData.instance.user!.jabatan;
+    context.read<KordinatBloc>().add(GetKordinatEvent(nik));
 
     return SizedBox(
       width: double.infinity,
       height: heightScreen,
-      child: const Column(
+      child: Column(
         children: [
-          Header(),
-          Maps(),
-          Spacer(),
-          Info(),
-          Spacer(
-            flex: 2,
+          Header(nama: nama, jabatan: jabatan),
+          const Maps(),
+          SizedBox(
+            height: 10.h,
           ),
+          const Info(),
         ],
       ),
     );

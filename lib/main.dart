@@ -1,28 +1,29 @@
-import 'package:attendance_byod/screens/pages/main_page.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'data/models/karyawan_model.dart';
+import 'screens/pages/main_page.dart';
 import 'bloc/absen/absen_bloc.dart';
-import 'bloc/map/map_bloc.dart';
-import 'shared/shared.dart';
+import 'bloc/account/account_bloc.dart';
+import 'bloc/change_password/change_password_bloc.dart';
+import 'bloc/login/login_bloc.dart';
 import 'bloc/kordinat/kordinat_bloc.dart';
+import 'bloc/map/map_bloc.dart';
+import 'bloc/log_absen/log_absen_bloc.dart';
+import 'shared/shared.dart';
 import 'screens/pages/login/login_page.dart';
 import 'utility/prefs_data.dart';
 import 'utility/app_observer.dart';
 import 'screens/pages/welcome/welcome_page.dart';
-import 'bloc/karyawan/karyawan_bloc.dart';
 import 'data/repositories/repositories.dart';
-
-List<CameraDescription>? cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
   await PrefsData.instance.init();
+  // PrefsData.instance.clear();
   HttpOverrides.global = MyHttpOverrides();
   Bloc.observer = AppObserver();
   runApp(MainApp());
@@ -36,8 +37,7 @@ class MainApp extends StatelessWidget {
   final AbsenRepository _absenRepository = AbsenRepository();
 
   final isFirstInstall = PrefsData.instance.isFirstInstall;
-
-  final isLogin = PrefsData.instance.user;
+  final userData = PrefsData.instance!.user;
 
   @override
   Widget build(BuildContext context) {
@@ -52,33 +52,19 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            // BlocProvider<KaryawanBloc>(
-            //     create: (context) => KaryawanBloc(_karyawanRepository)
-            //       ..add(UserEvent(isLogin != null ? isLogin!.nik : '000')),
-            //   ),
-            // BlocProvider<KordinatBloc>(
-            //   create: (context) => KordinatBloc(_kordinatRepository)
-            //     ..add(GetKordinatEvent(isLogin != null ? isLogin!.nik : '000')),
-            // ),
-            BlocProvider<KaryawanBloc>(create: (context) {
-              if (isLogin != null) {
-                KaryawanBloc(_karyawanRepository).add(UserEvent(isLogin!.nik));
-              }
-              return KaryawanBloc(_karyawanRepository);
-            }),
-            BlocProvider<KordinatBloc>(create: (context) {
-              if (isLogin != null) {
-                KordinatBloc(_kordinatRepository)
-                    .add(GetKordinatEvent(isLogin!.nik));
-              }
-              return KordinatBloc(_kordinatRepository);
-            }),
-            BlocProvider<MapBloc>(
-              create: (context) => MapBloc(),
-            ),
+            BlocProvider<LoginBloc>(
+                create: (context) => LoginBloc(_karyawanRepository)),
+            BlocProvider<KordinatBloc>(
+                create: (context) => KordinatBloc(_kordinatRepository)),
             BlocProvider<AbsenBloc>(
-              create: (context) => AbsenBloc(_absenRepository),
-            ),
+                create: (context) => AbsenBloc(_absenRepository)),
+            BlocProvider<MapBloc>(create: (context) => MapBloc()),
+            BlocProvider<LogAbsenBloc>(
+                create: (context) => LogAbsenBloc(_absenRepository)),
+            BlocProvider<AccountBloc>(
+                create: (context) => AccountBloc(_karyawanRepository)),
+            BlocProvider<ChangePasswordBloc>(
+                create: (context) => ChangePasswordBloc(_karyawanRepository))
           ],
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -89,14 +75,22 @@ class MainApp extends StatelessWidget {
                       centerTitle: true,
                       titleTextStyle: TextStyle(color: Colors.black87)),
                   scaffoldBackgroundColor: kLightGrey),
-              home: isFirstInstall
-                  ? const WelcomePage()
-                  : isLogin == null
-                      ? const LoginPage()
-                      : const MainPage()),
+              home: routePage(isFirstInstall, userData)),
         );
       },
     );
+  }
+}
+
+Widget routePage(bool isFirstInstall, KaryawanModel? userData) {
+  if (isFirstInstall) {
+    return const WelcomePage();
+  } else {
+    if (userData == null) {
+      return const LoginPage();
+    } else {
+      return const MainPage();
+    }
   }
 }
 

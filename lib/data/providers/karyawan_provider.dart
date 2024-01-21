@@ -24,7 +24,7 @@ class KaryawanProvider {
       final Response response = await dio.post(userUrl, data: {
         'nik': data['NIK'],
         'nama': data['NamaKaryawan'],
-        'jenisKelamin': data['JenisKelamin'],
+        'jenisKelamin': data['JenisKelamin'][0].toString().toUpperCase(),
         'tempatLahir': data['TempatLahir'],
         'tanggalLahir': data['TglLahir'],
         'noHp': data['Telepon'],
@@ -44,6 +44,20 @@ class KaryawanProvider {
     try {
       dio.options.headers['x-api-key'] = token;
       final Response response = await dio.get('$userUrl/$nik');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> changePassword(
+      String nik, String newPassword, String oldPassword) async {
+    try {
+      final Response response = await dio.patch(changePasswordUrl, data: {
+        'nik': nik,
+        'password': newPassword,
+        'oldPassword': oldPassword
+      });
       return response;
     } catch (e) {
       rethrow;

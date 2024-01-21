@@ -1,7 +1,11 @@
 part of '../attendance_page.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
+  const Header({Key? key, required this.nama, required this.jabatan})
+      : super(key: key);
+
+  final String nama;
+  final String jabatan;
 
   @override
   Widget build(BuildContext context) {
@@ -38,30 +42,24 @@ class Header extends StatelessWidget {
           const SizedBox(
             width: kSpace,
           ),
-          BlocBuilder<KaryawanBloc, KaryawanState>(
-            builder: (context, state) {
-              if (state is LoginSuccess) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      state.data.nama.toUpperCase(),
-                      style: kRalewaySemiBold.copyWith(color: kWhite),
-                      maxLines: 1,
-                      overflow: TextOverflow.clip,
-                    ),
-                    Text(
-                      state.data.jabatan,
-                      style: kRalewayRegular.copyWith(
-                        color: kYellow,
-                      ),
-                    )
-                  ],
-                );
-              }
-              return const SizedBox();
-            },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                nama.toUpperCase(),
+                style:
+                    kRalewaySemiBold.copyWith(color: kWhite, fontSize: 18.sp),
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
+              Text(
+                jabatan,
+                style: kRalewayRegular.copyWith(
+                  color: kYellow,
+                ),
+              )
+            ],
           )
         ],
       ),

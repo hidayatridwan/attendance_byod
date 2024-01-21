@@ -7,15 +7,8 @@ abstract class AbsenEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class DoAbsenEvent extends AbsenEvent {
+class SendAbsenEvent extends AbsenEvent {
   final String nik;
 
-  const DoAbsenEvent(this.nik);
-}
-
-class LogEvent extends AbsenEvent {
-  final String nik;
-  final String period;
-
-  const LogEvent(this.nik, this.period);
+  const SendAbsenEvent(this.nik);
 }

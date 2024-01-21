@@ -9,6 +9,8 @@ abstract class AbsenState extends Equatable {
 
 class AbsenInitial extends AbsenState {}
 
+class AbsenLoading extends AbsenState {}
+
 class AbsenSuccess extends AbsenState {
   final AbsenModel data;
 
@@ -18,32 +20,10 @@ class AbsenSuccess extends AbsenState {
   List<Object> get props => [data];
 }
 
-class AbsenLoading extends AbsenState {}
-
 class AbsenError extends AbsenState {
   final String error;
 
   const AbsenError(this.error);
-
-  @override
-  List<Object> get props => [error];
-}
-
-class LogLoading extends AbsenState {}
-
-class LogSuccess extends AbsenState {
-  final List<AbsenModel> data;
-
-  const LogSuccess(this.data);
-
-  @override
-  List<Object> get props => [data];
-}
-
-class LogError extends AbsenState {
-  final String error;
-
-  const LogError(this.error);
 
   @override
   List<Object> get props => [error];

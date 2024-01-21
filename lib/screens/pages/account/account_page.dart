@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../bloc/karyawan/karyawan_bloc.dart';
+import '../../../bloc/account/account_bloc.dart';
+import '../../../screens/pages/change_password/change_password_page.dart';
 import '../../../shared/shared.dart';
 import '../../../utility/prefs_data.dart';
 import '../login/login_page.dart';
@@ -14,27 +15,38 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nik = PrefsData.instance.user!.nik;
+    context.read<AccountBloc>().add(GetAccountEvent(nik));
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Account',
-            style: kRalewaySemiBold,
-          ),
+      appBar: AppBar(
+        title: Text(
+          'Account',
+          style: kRalewaySemiBold.copyWith(fontSize: 18.sp),
         ),
-        body: ListView(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(kPadding),
-              padding: const EdgeInsets.all(kPadding),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kBorderRadius),
-                color: kWhite,
+        automaticallyImplyLeading: false,
+      ),
+      body: BlocBuilder<AccountBloc, AccountState>(
+        builder: (context, state) {
+          if (state is AccountLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: kPurple,
               ),
-              child: BlocBuilder<KaryawanBloc, KaryawanState>(
-                builder: (context, state) {
-                  if (state is LoginSuccess) {
-                    return Column(
+            );
+          }
+          if (state is AccountSuccess) {
+            return ListView(
+              children: [
+                Container(
+                    margin: const EdgeInsets.all(kPadding),
+                    padding: const EdgeInsets.all(kPadding),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(kBorderRadius),
+                      color: kWhite,
+                    ),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CardWidget(
@@ -44,6 +56,10 @@ class AccountPage extends StatelessWidget {
                         CardWidget(
                           label: 'Name',
                           value: state.data.nama,
+                        ),
+                        CardWidget(
+                          label: 'Position',
+                          value: state.data.jabatan,
                         ),
                         CardWidget(
                           label: 'Phone number',
@@ -62,41 +78,71 @@ class AccountPage extends StatelessWidget {
                           value: state.data.alamat,
                         ),
                       ],
-                    );
-                  }
-                  return const SizedBox();
-                },
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: kPadding),
-              child: OutlinedButton(
-                onPressed: () {
-                  PrefsData.instance.clear();
-
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ));
-                },
-                style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.all(kPadding / 1.3),
-                    backgroundColor: kWhite,
-                    side: const BorderSide(color: kYellow, width: 2),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(kBorderRadius))),
-                child: Text(
-                  'Logout',
-                  style: kRalewayRegular.copyWith(color: Colors.black87),
+                    )),
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: kPadding),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChangePasswordPage(),
+                          ));
+                    },
+                    style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.all(kPadding / 1.3),
+                        backgroundColor: kWhite,
+                        side: const BorderSide(color: kBlack, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(kBorderRadius))),
+                    child: Text(
+                      'Change Password',
+                      style: kRalewayRegular.copyWith(
+                          color: Colors.black87, fontSize: 14.sp),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 20.sp,
-            ),
-          ],
-        ));
+                SizedBox(
+                  height: 20.sp,
+                ),
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: kPadding),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      PrefsData.instance.clear();
+
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ));
+                    },
+                    style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.all(kPadding / 1.3),
+                        backgroundColor: kWhite,
+                        side: const BorderSide(color: kRed, width: 2),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(kBorderRadius))),
+                    child: Text(
+                      'Logout',
+                      style: kRalewayRegular.copyWith(
+                          color: Colors.black87, fontSize: 14.sp),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.sp,
+                ),
+              ],
+            );
+          }
+          return const SizedBox();
+        },
+      ),
+    );
   }
 }

@@ -23,8 +23,12 @@ class KaryawanRepository {
     try {
       await _karyawanProvider.register(nik, facePoint);
       return const Right('Register Succeeded');
-    } on DioException {
-      return const Left('Register Failed');
+    } on DioException catch (e) {
+      if (e.response != null) {
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
+      } else {
+        return const Left('Failed host lookup connection');
+      }
     }
   }
 
@@ -34,6 +38,22 @@ class KaryawanRepository {
       final result = response.data['result'];
       PrefsData.instance.saveUser(jsonEncode(result));
       return Right(karyawanModelFromJson(result));
+    } on DioException catch (e) {
+      if (e.response != null) {
+        return Left(e.response!.data['error'] ?? e.response!.data['message']);
+      } else {
+        return const Left('Failed host lookup connection');
+      }
+    }
+  }
+
+  Future<Either<String, String>> changePassword(
+      String nik, String newPassword, String oldPassword) async {
+    try {
+      final response =
+          await _karyawanProvider.changePassword(nik, newPassword, oldPassword);
+      final result = response.data['message'];
+      return Right(result);
     } on DioException catch (e) {
       if (e.response != null) {
         return Left(e.response!.data['error'] ?? e.response!.data['message']);

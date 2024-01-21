@@ -13,7 +13,7 @@ class IsRegistered extends StatelessWidget {
       children: [
         Text(
           login ? 'Don\'t have an account?' : 'Already have an account?',
-          style: kRalewayRegular.copyWith(color: kPurple),
+          style: kRalewayRegular.copyWith(color: kPurple, fontSize: 14.sp),
         ),
         TextButton(
           onPressed: press,

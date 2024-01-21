@@ -4,15 +4,15 @@ import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
-import 'package:image/image.dart' as img_lib;
-
-import '../../../main.dart';
+import 'package:image/image.dart' as imglib;
 
 enum Choice { view, delete }
 
 Future<CameraDescription> getCamera(CameraLensDirection dir) async {
-  return cameras!.firstWhere(
-    (CameraDescription camera) => camera.lensDirection == dir,
+  return await availableCameras().then(
+    (List<CameraDescription> cameras) => cameras.firstWhere(
+      (CameraDescription camera) => camera.lensDirection == dir,
+    ),
   );
 }
 
@@ -36,19 +36,6 @@ GoogleVisionImageMetadata buildMetaData(
   );
 }
 
-Future<dynamic> detect({
-  CameraImage? image,
-  Future<dynamic>? Function(GoogleVisionImage image)? detectInImage,
-  int? imageRotation,
-}) async {
-  return detectInImage!(
-    GoogleVisionImage.fromBytes(
-      _concatenatePlanes(image!.planes),
-      buildMetaData(image, _rotationIntToImageRotation(imageRotation!)),
-    ),
-  );
-}
-
 Uint8List _concatenatePlanes(List<Plane> planes) {
   final WriteBuffer allBytes = WriteBuffer();
   for (var plane in planes) {
@@ -57,7 +44,26 @@ Uint8List _concatenatePlanes(List<Plane> planes) {
   return allBytes.done().buffer.asUint8List();
 }
 
-ImageRotation _rotationIntToImageRotation(int rotation) {
+Future<dynamic> detect(CameraImage? image,
+    Future<dynamic>? Function(GoogleVisionImage image)? handleDetection) async {
+  try {
+    CameraDescription description = await getCamera(CameraLensDirection.front);
+    ImageRotation rotation = rotationIntToImageRotation(
+      description.sensorOrientation,
+    );
+
+    return handleDetection!(
+      GoogleVisionImage.fromBytes(
+        _concatenatePlanes(image!.planes),
+        buildMetaData(image!, rotation),
+      ),
+    );
+  } catch (e) {
+    print({'detect': e});
+  }
+}
+
+ImageRotation rotationIntToImageRotation(int rotation) {
   switch (rotation) {
     case 0:
       return ImageRotation.rotation0;
@@ -72,16 +78,16 @@ ImageRotation _rotationIntToImageRotation(int rotation) {
 }
 
 Float32List imageToByteListFloat32(
-    img_lib.Image image, int inputSize, double mean, double std) {
+    imglib.Image image, int inputSize, double mean, double std) {
   var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
   var buffer = Float32List.view(convertedBytes.buffer);
   int pixelIndex = 0;
   for (var i = 0; i < inputSize; i++) {
     for (var j = 0; j < inputSize; j++) {
       var pixel = image.getPixel(j, i);
-      buffer[pixelIndex++] = (img_lib.getRed(pixel) - mean) / std;
-      buffer[pixelIndex++] = (img_lib.getGreen(pixel) - mean) / std;
-      buffer[pixelIndex++] = (img_lib.getBlue(pixel) - mean) / std;
+      buffer[pixelIndex++] = (imglib.getRed(pixel) - mean) / std;
+      buffer[pixelIndex++] = (imglib.getGreen(pixel) - mean) / std;
+      buffer[pixelIndex++] = (imglib.getBlue(pixel) - mean) / std;
     }
   }
   return convertedBytes.buffer.asFloat32List();

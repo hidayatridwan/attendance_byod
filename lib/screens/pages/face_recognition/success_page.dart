@@ -1,22 +1,17 @@
-import 'package:attendance_byod/screens/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../bloc/kordinat/kordinat_bloc.dart';
 import '../../../screens/pages/main_page.dart';
-import '../../../utility/prefs_data.dart';
+import '../../../screens/pages/login/login_page.dart';
 import '../../../shared/shared.dart';
 import '../../widgets/widgets.dart';
 
 class SuccessPage extends StatelessWidget {
-  const SuccessPage({Key? key, required this.isRegistered}) : super(key: key);
-  final bool isRegistered;
+  const SuccessPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final kordinatBloc = context.read<KordinatBloc>();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(kPadding),
@@ -30,25 +25,34 @@ class SuccessPage extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            'Successfully ${isRegistered ? 'Registered' : 'Absent'}',
+            'Post attendance successfully',
             textAlign: TextAlign.center,
-            style: kRalewayBold,
+            style: kRalewayBold.copyWith(fontSize: 25.sp),
           ),
           const Spacer(),
-          RoundedButton(
-            text: 'Okay',
-            press: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                if (isRegistered) {
-                  return const LoginPage();
-                } else {
-                  final nik = PrefsData.instance.user!.nik;
-                  kordinatBloc.add(GetKordinatEvent(nik));
-                  return const MainPage();
-                }
-              }));
-            },
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: kPadding),
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainPage(),
+                    ));
+              },
+              style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.all(kPadding / 1.3),
+                  backgroundColor: kWhite,
+                  side: const BorderSide(color: kBlack, width: 2),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(kBorderRadius))),
+              child: Text(
+                'Okay',
+                style: kRalewayRegular.copyWith(
+                    color: Colors.black87, fontSize: 14.sp),
+              ),
+            ),
           ),
           const Spacer(),
         ]),

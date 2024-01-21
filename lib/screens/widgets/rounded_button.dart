@@ -35,7 +35,7 @@ class RoundedButton extends StatelessWidget {
                 : Text(
                     text,
                     style: kRalewayRegular.copyWith(
-                        color: disabled ? kGrey : kWhite),
+                        color: disabled ? kGrey : kWhite, fontSize: 14.sp),
                   )),
       ),
     );

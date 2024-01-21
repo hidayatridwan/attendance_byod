@@ -102,7 +102,7 @@ class _MapsState extends State<Maps> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150.h,
+      height: 140.h,
       width: double.infinity,
       color: kLightGrey,
       child: Stack(

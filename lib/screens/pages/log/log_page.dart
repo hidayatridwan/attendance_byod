@@ -1,10 +1,10 @@
-import 'package:attendance_byod/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import '../../../bloc/absen/absen_bloc.dart';
+import '../../../shared/shared.dart';
+import '../../../bloc/log_absen/log_absen_bloc.dart';
 import '../../../utility/prefs_data.dart';
 
 part 'components/card_widget.dart';
@@ -14,15 +14,19 @@ class LogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.now();
     final nik = PrefsData.instance.user!.nik;
+    final date = DateTime.now();
+    final formatDate = DateFormat('y-M-d');
+    final period = formatDate.format(date);
+    context.read<LogAbsenBloc>().add(GetLogAbsenEvent(nik, period));
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Logs',
-          style: kRalewaySemiBold,
+          style: kRalewaySemiBold.copyWith(fontSize: 18.sp),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () async {
@@ -44,7 +48,7 @@ class LogPage extends StatelessWidget {
                   });
               final DateFormat formatter = DateFormat('yyyy-MM-dd');
               final String period = formatter.format(picked!);
-              context.read<AbsenBloc>().add(LogEvent(nik, period));
+              context.read<LogAbsenBloc>().add(GetLogAbsenEvent(nik, period));
             },
             icon: const Icon(
               Icons.calendar_month,
@@ -53,16 +57,16 @@ class LogPage extends StatelessWidget {
           )
         ],
       ),
-      body: BlocBuilder<AbsenBloc, AbsenState>(
+      body: BlocBuilder<LogAbsenBloc, LogAbsenState>(
         builder: (context, state) {
-          if (state is LogLoading) {
+          if (state is LogAbsenLoading) {
             return const Center(
               child: CircularProgressIndicator(
                 color: kPurple,
               ),
             );
           }
-          if (state is LogSuccess) {
+          if (state is LogAbsenSuccess) {
             if (state.data.isEmpty) {
               return const Center(
                 child: Text('No data fetched'),
@@ -85,8 +89,8 @@ class LogPage extends StatelessWidget {
                 if (dateEnd.hour < 17) {
                   checkOut = false;
                 }
-
                 return CardWidget(
+                  index: index,
                   dateStart: dateStart,
                   dateEnd: dateEnd,
                   checkIn: checkIn,
@@ -95,7 +99,7 @@ class LogPage extends StatelessWidget {
               },
             );
           }
-          if (state is LogError) {
+          if (state is LogAbsenError) {
             return Center(
               child: Text(state.error),
             );

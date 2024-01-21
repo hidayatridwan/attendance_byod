@@ -13,8 +13,7 @@ class PrefsData {
   }
 
   Future<void> clear() async {
-    _pref.remove('user');
-    _pref.remove('kordinat');
+    _pref.clear();
   }
 
   Future<bool> setFirstInstall() async {

@@ -5,7 +5,7 @@ const Color kDarkPurple = Color(0xFF2C1F63);
 
 const Color kGrey = Color(0xFFA4AAAD);
 const Color kDarkGrey = Color(0xFF878787);
-const Color kLightGrey = Color(0xFFF6F7F9);
+const Color kLightGrey = Color(0xFFF3F4F6);
 
 const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF111111);

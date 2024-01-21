@@ -17,7 +17,6 @@ class FaceDetectorPainter extends CustomPainter {
       ..color = Colors.greenAccent;
     for (String label in results.keys) {
       for (Face face in results[label]) {
-        // face = results[label];
         scaleX = size.width / imageSize!.width;
         scaleY = size.height / imageSize!.height;
         canvas.drawRRect(
